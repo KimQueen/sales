@@ -25,12 +25,13 @@
           </p>
         </div>
         <div class="product_number">
-          <span class="product_number_minus">-</span>
-          <!-- {{cardList?.[shopId]?.[item._id]?.count || 0}} -->
-          {{cartList?.[shopId]?.[productId]?.count || 0}}
+          <span class="product_number_minus"
+          @click="()=>{changeCartItemInfo(shopId,item._id,item ,-1)}"
+          >-</span>
+          {{cartList?.[shopId]?.[item._id]?.count || 0}}
           <span
             class="product_number_plus"
-            @click="()=>{addItemToCart(shopId,item._id,item)}"
+            @click="()=>{changeCartItemInfo(shopId,item._id,item ,1)}"
           >+</span>
         </div>
       </div>
@@ -40,8 +41,8 @@
 <script>
 import { useRoute } from 'vue-router'
 import { reactive, toRefs, ref, watchEffect } from 'vue'
-import { useStore } from 'vuex'
 import { get } from '../../utils/request'
+import { useCartListEffect } from './commonCartEffect'
 
 const categories = [
   { label: '全部商品', tab: 'all' },
@@ -81,17 +82,6 @@ const useCurrentListEffect = (currentTab, shopId) => {
   return { contentList }
 }
 
-// 购物车相关逻辑
-const useCartListEffect = () => {
-  const store = useStore()
-  const cardList = toRefs(store.state)
-  const addItemToCart = (shopId, productId, productInfo) => {
-    store.commit('addItemToCart', { shopId, productId, productInfo })
-  }
-  console.log(cardList)
-  return { cardList, addItemToCart }
-}
-
 export default {
   name: 'Content',
   setup () {
@@ -99,9 +89,9 @@ export default {
     const shopId = route.params.id
     const { currentTab, handleTabClick } = useTabChangeEffect()
     const { contentList } = useCurrentListEffect(currentTab, shopId)
-    const { cardList, addItemToCart } = useCartListEffect()
+    const { cartList, changeCartItemInfo } = useCartListEffect()
 
-    return { contentList, currentTab, categories, handleTabClick, cardList, shopId, addItemToCart }
+    return { contentList, currentTab, categories, handleTabClick, cartList, shopId, changeCartItemInfo }
   }
 }
 </script>
