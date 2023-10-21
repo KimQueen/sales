@@ -38,7 +38,7 @@ export default {
   bottom: 0;
   width: 100%;
   height: 0.49rem;
-  border-top: 0.01px solid #f1f1f1;
+  border-top: .01rem solid #f1f1f1;
   color: #333;
   a{
     color: #333;

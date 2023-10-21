@@ -174,7 +174,7 @@ export default {
   left: 0;
   right: 0;
   height: 0.49rem;
-  border-top: 1px solid #f1f1f1;
+  border-top: .01rem solid #f1f1f1;
   z-index: 2;
   background: #fff;
 }
