@@ -25,14 +25,19 @@
           </p>
         </div>
         <div class="product_number">
-          <span class="product_number_minus"
+          <span
+          class="product_number_minus iconfont"
           @click="()=>{changeCartItem(shopId,item._id,item ,-1,shopName)}"
-          >-</span>
+          >
+            &#xe780;
+          </span>
           {{cartList?.[shopId]?.productList?.[item._id]?.count || 0}}
           <span
-            class="product_number_plus"
+            class="product_number_plus iconfont"
             @click="()=>{changeCartItem(shopId,item._id,item ,1,shopName)}"
-          >+</span>
+          >
+            &#xe845;
+          </span>
         </div>
       </div>
     </div>
@@ -187,24 +192,20 @@ export default {
     position: absolute;
     right: 0;
     bottom: 0.12rem;
+    display: flex;
+    align-items: center;
     .product_number_minus,
     .product_number_plus {
-      width: 0.2rem;
-      height: 0.2rem;
-      line-height: 0.17rem;
       display: inline-block;
-      border-radius: 50%;
       font-size: 0.2rem;
       text-align: center;
     }
     .product_number_minus {
-      border: 0.01rem solid #666;
       color: #666;
       margin-right: 0.05rem;
     }
     .product_number_plus {
-      background: #0091ff;
-      color: #fff;
+      color: #0091ff;
       margin-left: 0.05rem;
     }
   }

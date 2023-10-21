@@ -3,7 +3,7 @@
     <StaticPart />
     <Nearby />
   </div>
-  <Docker  :currentIndex ="1" />
+  <Docker  :currentIndex ="0" />
 </template>
 
 <script>

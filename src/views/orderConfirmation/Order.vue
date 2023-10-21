@@ -72,8 +72,8 @@ export default {
     const route = useRoute()
     const shopId = route.params.id
 
-    const { calculations, shopName, productList } = useCartListEffect(shopId, shopId)
-    const { handleConfirmOrder } = useConfirmOrderEffect(productList, shopName)
+    const { calculations, shopName, productList } = useCartListEffect(shopId)
+    const { handleConfirmOrder } = useConfirmOrderEffect(productList, shopName, shopId)
     const { showConfirm, handleSumbitClick } = useShowMaskEffect()
 
     return { calculations, handleConfirmOrder, showConfirm, handleSumbitClick }

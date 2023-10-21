@@ -21,7 +21,7 @@
         autocomplete="new-password"
       />
     </div>
-      <div class="wrapper__input">
+    <div class="wrapper__input">
       <input
         v-model="checkPassword"
         type="password"
@@ -29,10 +29,12 @@
         placeholder="确认密码"
       />
     </div>
-    <div class="wrapper__register-button"  @click="handleRegister">注册</div>
-    <div class="wrapper__register-link" @click="handleLoginClick">已有账号登录</div>
+    <div class="wrapper__register-button" @click="handleRegister">注册</div>
+    <div class="wrapper__register-link" @click="handleLoginClick">
+      已有账号登录
+    </div>
   </div>
-    <Toast v-if="show" :message="toastMessage"/>
+  <Toast v-if="show" :message="toastMessage" />
 </template>
 
 <script>
@@ -50,7 +52,12 @@ const useRegisterEffect = (showToast) => {
   const router = useRouter()
   const handleRegister = async () => {
     const { userName, password, checkPassword } = data
-    if (data.checkPassword !== data.password || !userName || !password || !checkPassword) {
+    if (
+      data.checkPassword !== data.password ||
+      !userName ||
+      !password ||
+      !checkPassword
+    ) {
       showToast('用户名、密码输入错误')
       return
     }
@@ -78,12 +85,22 @@ export default {
   },
   setup () {
     const { showToast, show, toastMessage } = useToastEffect()
-    const { userName, password, checkPassword, handleRegister } = useRegisterEffect(showToast)
+    const { userName, password, checkPassword, handleRegister } =
+      useRegisterEffect(showToast)
     const router = useRouter()
     const handleLoginClick = () => {
       router.push({ name: 'Login' })
     }
-    return { userName, password, checkPassword, show, showToast, toastMessage, handleLoginClick, handleRegister }
+    return {
+      userName,
+      password,
+      checkPassword,
+      show,
+      showToast,
+      toastMessage,
+      handleLoginClick,
+      handleRegister
+    }
   }
 }
 </script>
@@ -114,7 +131,8 @@ export default {
       width: 100%;
       border: none;
       outline: none;
-      line-height: 0.48rem;
+      line-height: 0.22rem;
+      margin-top: 0.12rem;
       background: none;
       color: rgba(0, 0, 0, 0.85);
       &::placeholder {
@@ -134,10 +152,10 @@ export default {
     color: #fff;
   }
 
-  .wrapper__register-link{
-    margin-top: .16rem;
+  .wrapper__register-link {
+    margin-top: 0.16rem;
     text-align: center;
-    font-size: .14rem;
+    font-size: 0.14rem;
     color: #777;
   }
 }

@@ -113,7 +113,8 @@ export default {
       width: 100%;
       border: none;
       outline: none;
-      line-height: 0.48rem;
+      line-height: 0.22rem;
+      margin-top: .12rem;
       background: none;
       color: rgba(0, 0, 0, 0.85);
       &::placeholder {

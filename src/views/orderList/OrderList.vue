@@ -28,7 +28,7 @@
       </div>
     </div>
   </div>
-  <Docker :currentIndex="2" />
+  <Docker :currentIndex="1" />
 </template>
 
 <script>

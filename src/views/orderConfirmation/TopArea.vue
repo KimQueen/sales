@@ -35,13 +35,13 @@ export default {
 @import "../../style/mixin.scss";
 .top {
   position: relative;
-  height: 1.96rem;
+  height: 1.8rem;
   background-size: 100% 1.59rem;
   background-repeat: no-repeat;
   background-image: linear-gradient(0deg, rgba(0, 145, 255, 0) 4%, #0091ff 50%);
   .top_header {
     position: relative;
-    padding-top: 0.26rem;
+    padding-top: 0.2rem;
     color: #fff;
     line-height: 0.24rem;
     text-align: center;

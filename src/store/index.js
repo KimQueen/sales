@@ -52,6 +52,7 @@ export default createStore({
     },
     cleanCartProducts (state, payload) {
       const { shopId } = payload
+      console.log(state.cartList, shopId)
       state.cartList[shopId].productList = {}
       setLocalCartList(state)
     },

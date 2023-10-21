@@ -44,37 +44,38 @@
           </div>
           <div class="product_number">
             <span
-              class="product_number_minus"
+              class="product_number_minus iconfont"
               @click="
                 () => {
                   changeCartItemInfo(shopId, item._id, item, -1);
                 }
               "
-              >-</span
+              >&#xe780;</span
             >
             {{ item?.count || 0 }}
             <span
-              class="product_number_plus"
+              class="product_number_plus iconfont"
               @click="
                 () => {
                   changeCartItemInfo(shopId, item._id, item, 1);
                 }
               "
-              >+</span
+              >&#xe845;</span
             >
           </div>
         </div>
       </template>
     </div>
     <div class="check">
-      <diiv class="check_icon">
-        <img
-          src="https://www.dell-lee.com/imgs/vue3/basket.png"
-          class="icon_img"
+      <div class="check_icon">
+        <span
+          class="icon_img iconfont"
           @click="showCartModal"
-        />
+        >
+        &#xe600;
+        </span>
         <div class="check_icon_tag">{{ calculations.total }}</div>
-      </diiv>
+      </div>
       <div class="check_info">
         总计：<span class="check_info_price">¥ {{ calculations.price }}</span>
       </div>
@@ -198,10 +199,11 @@ export default {
       transform: scale(0.5);
     }
     .icon_img {
-      margin: 0.12rem auto;
+      color: #4fb0f9;
+      margin-left: .2rem;
+      margin-top: .1rem;
       display: block;
-      width: 0.28rem;
-      height: 0.26rem;
+      font-size: 0.28rem;
     }
   }
   .check_info {
@@ -308,11 +310,11 @@ export default {
   .product_number {
     position: absolute;
     right: 0;
-    bottom: 0.12rem;
+    bottom: 0.26rem;
+    display: flex;
+    align-items: center;
     .product_number_minus,
     .product_number_plus {
-      width: 0.2rem;
-      height: 0.2rem;
       line-height: 0.17rem;
       display: inline-block;
       border-radius: 50%;
@@ -320,13 +322,11 @@ export default {
       text-align: center;
     }
     .product_number_minus {
-      border: 0.01rem solid #666;
       color: #666;
       margin-right: 0.05rem;
     }
     .product_number_plus {
-      background: #0091ff;
-      color: #fff;
+      color: #0091ff;
       margin-left: 0.05rem;
     }
   }
