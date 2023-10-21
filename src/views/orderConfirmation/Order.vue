@@ -3,10 +3,10 @@
     <div class="order_price">
       实付金额：¥<b>{{ calculations.price }}</b>
     </div>
-    <div class="order_btn">提交订单</div>
+    <div class="order_btn" @click="()=>{handleSumbitClick(true)}">提交订单</div>
   </div>
-  <div class="mask">
-    <div class="mask_content">
+  <div class="mask" v-show="showConfirm" @click="()=>{handleSumbitClick(false)}">
+    <div class="mask_content" @click.stop>
       <div class="mask_content_title">确认要离开收银台</div>
       <div class="mask_content_desc">请尽快完成支付，否则将会被取消</div>
       <div class="mask_content_btns">
@@ -25,39 +25,58 @@ import { useCartListEffect } from '../../effects/cartEffect'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { post } from '../../utils/request'
+import { ref } from 'vue'
+
+// 与下单相关的逻辑
+const useConfirmOrderEffect = (productList, shopName, shopId) => {
+  const router = useRouter()
+  const store = useStore()
+  const handleConfirmOrder = async (isCanceled) => {
+    const products = []
+
+    for (const i in productList.value) {
+      const product = productList.value[i]
+      if (product.count > 0) {
+        products.push({ id: product._id, num: product.count })
+      }
+    }
+    const params = {
+      addressId: 1,
+      shopId,
+      shopName: shopName.value,
+      isCanceled,
+      products
+    }
+    const result = await post('/order', params)
+    if (result?.error === 0) {
+      store.commit('cleanCartProducts', { shopId })
+      router.push({ name: 'OrderList' })
+    }
+  }
+  return { handleConfirmOrder }
+}
+
+// confirm展示相关的逻辑
+
+const useShowMaskEffect = () => {
+  const showConfirm = ref(false)
+  const handleSumbitClick = (status) => {
+    showConfirm.value = status
+  }
+  return { showConfirm, handleSumbitClick }
+}
 
 export default {
   name: 'Order',
   setup () {
     const route = useRoute()
-    const router = useRouter()
-    const store = useStore()
     const shopId = route.params.id
-    const { calculations, shopName, productList } = useCartListEffect(shopId)
 
-    const handleConfirmOrder = async (isCanceled) => {
-      const products = []
+    const { calculations, shopName, productList } = useCartListEffect(shopId, shopId)
+    const { handleConfirmOrder } = useConfirmOrderEffect(productList, shopName)
+    const { showConfirm, handleSumbitClick } = useShowMaskEffect()
 
-      for (const i in productList.value) {
-        const product = productList.value[i]
-        if (product.count > 0) {
-          products.push({ id: product._id, num: product.count })
-        }
-      }
-      const params = {
-        addressId: 1,
-        shopId,
-        shopName: shopName.value,
-        isCanceled,
-        products
-      }
-      const result = await post('/order', params)
-      if (result?.error === 0) {
-        store.commit('cleanCartProducts', { shopId })
-        router.push({ name: 'Home' })
-      }
-    }
-    return { calculations, handleConfirmOrder }
+    return { calculations, handleConfirmOrder, showConfirm, handleSumbitClick }
   }
 }
 </script>

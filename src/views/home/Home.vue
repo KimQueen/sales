@@ -1,16 +1,15 @@
 <template>
   <div class="wrapper">
     <StaticPart />
-   <Nearby/>
+    <Nearby />
   </div>
-
-<Docker/>
+  <Docker  :currentIndex ="1" />
 </template>
 
 <script>
 import StaticPart from './StaticPart'
 import Nearby from './Nearby'
-import Docker from './Docker'
+import Docker from '../../components/Docker.vue'
 
 export default {
   name: 'Home',
@@ -30,8 +29,5 @@ export default {
   right: 0;
   bottom: 0.5rem;
   padding: 0 0.18rem 0.1rem 0.18rem;
-}
-.docker__item--active {
-  color: #1fa4fc;
 }
 </style>
