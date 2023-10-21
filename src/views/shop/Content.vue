@@ -26,12 +26,12 @@
         </div>
         <div class="product_number">
           <span class="product_number_minus"
-          @click="()=>{changeCartItemInfo(shopId,item._id,item ,-1)}"
+          @click="()=>{changeCartItem(shopId,item._id,item ,-1,shopName)}"
           >-</span>
-          {{cartList?.[shopId]?.[item._id]?.count || 0}}
+          {{cartList?.[shopId]?.productList?.[item._id]?.count || 0}}
           <span
             class="product_number_plus"
-            @click="()=>{changeCartItemInfo(shopId,item._id,item ,1)}"
+            @click="()=>{changeCartItem(shopId,item._id,item ,1,shopName)}"
           >+</span>
         </div>
       </div>
@@ -42,6 +42,7 @@
 import { useRoute } from 'vue-router'
 import { reactive, toRefs, ref, watchEffect } from 'vue'
 import { get } from '../../utils/request'
+import { useStore } from 'vuex'
 import { useCartListEffect } from './commonCartEffect'
 
 const categories = [
@@ -82,16 +83,30 @@ const useCurrentListEffect = (currentTab, shopId) => {
   return { contentList }
 }
 
+const useCartEffect = () => {
+  const store = useStore()
+  const { cartList, changeCartItemInfo } = useCartListEffect()
+  const changeShopName = (shopId, shopName) => {
+    store.commit('changeShopName', { shopId, shopName })
+  }
+  const changeCartItem = (shopId, productId, productInfo, step, shopName) => {
+    changeCartItemInfo(shopId, productId, productInfo, step)
+    changeShopName(shopId, shopName)
+  }
+  return { cartList, changeCartItem }
+}
+
 export default {
   name: 'Content',
+  props: ['shopName'],
   setup () {
     const route = useRoute()
     const shopId = route.params.id
     const { currentTab, handleTabClick } = useTabChangeEffect()
+    const { cartList, changeCartItem } = useCartEffect()
     const { contentList } = useCurrentListEffect(currentTab, shopId)
-    const { cartList, changeCartItemInfo } = useCartListEffect()
 
-    return { contentList, currentTab, categories, handleTabClick, cartList, shopId, changeCartItemInfo }
+    return { contentList, currentTab, categories, handleTabClick, cartList, shopId, changeCartItem }
   }
 }
 </script>

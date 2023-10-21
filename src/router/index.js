@@ -28,6 +28,11 @@ const routes = [
       const { isLogin } = localStorage
       isLogin ? next({ name: 'Home' }) : next()
     }
+  },
+  {
+    path: '/cartList',
+    name: 'CartList',
+    component: () => import('../views/cartList/CartList')
   }
 ]
 
