@@ -33,6 +33,11 @@ const routes = [
     path: '/cartList',
     name: 'CartList',
     component: () => import('../views/cartList/CartList')
+  },
+  {
+    path: '/orderConfirmation/:id',
+    name: 'OrderConfirmation',
+    component: () => import('../views/orderConfirmation/OrderConfirmation')
   }
 ]
 

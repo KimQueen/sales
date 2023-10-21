@@ -79,7 +79,7 @@
         总计：<span class="check_info_price">¥ {{ calculations.price }}</span>
       </div>
       <div class="check_btn">
-        <router-link :to ="{name: 'Home'}">
+        <router-link :to ="{path: `/orderConfirmation/${shopId}`}">
           去结算
         </router-link>
       </div>
@@ -88,37 +88,14 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
-import { useCartListEffect } from './commonCartEffect'
+import { useCartListEffect } from '../../effects/cartEffect'
 
 const useCartEffect = (shopId) => {
   const store = useStore()
-  const { changeCartItemInfo, cartList } = useCartListEffect()
-  const calculations = computed(() => {
-    const productList = cartList[shopId]?.productList
-    const result = { total: 0, price: 0, allChecked: true }
-    if (productList) {
-      for (const i in productList) {
-        const product = productList[i]
-        if (product.checked) {
-          result.total += product.count
-          result.price += product.count * product.price
-        }
-        if (product.count > 0 && !product.checked) {
-          result.allChecked = false
-        }
-      }
-    }
-    result.price = result.price.toFixed(2)
-    return result
-  })
-
-  const productList = computed(() => {
-    const productList = cartList[shopId].productList || { }
-    return productList
-  })
+  const { changeCartItemInfo, calculations, productList } = useCartListEffect(shopId)
 
   const changeCartItemChecked = (shopId, productId) => {
     store.commit('changeCartItemChecked', { shopId, productId })

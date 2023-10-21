@@ -7,7 +7,11 @@ const setLocalCartList = (state) => {
 }
 
 const getLocalCartList = () => {
-  return JSON.parse(localStorage.getItem('cartList')) || {}
+  try {
+    return JSON.parse(localStorage.getItem('cartList')) || {}
+  } catch (e) {
+    return {}
+  }
 }
 
 export default createStore({
